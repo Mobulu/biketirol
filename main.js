@@ -88,7 +88,8 @@ let gpxTrack = new L.GPX("../data/19.gpx", {
         dashArray: [2, 5],
     },
 }).addTo(overlays.gpx);
-   
+
+// Zoom auf den gesamten GPX Track
 gpxTrack.on("loaded", function(evt) {
     //console.log("loaded gpx event: ", evt);
     map.fitBounds(evt.target.getBounds());
