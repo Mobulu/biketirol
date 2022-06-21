@@ -74,7 +74,7 @@ L.control.fullscreen().addTo(map);
 overlays.gpx.addTo(map);
 
 // GPX Track Layer implementieren
-let gpxTrack = new L.GPX("../data/19.gpx", {
+let gpxTrack = new L.GPX("./data/19.gpx", {
     async: true, 
     marker_options: {
         startIconUrl: 'icons/start.png',
@@ -89,19 +89,18 @@ let gpxTrack = new L.GPX("../data/19.gpx", {
     },
 }).addTo(overlays.gpx);
 
-// Zoom auf den gesamten GPX Track
 gpxTrack.on("loaded", function(evt) {
-    //console.log("loaded gpx event: ", evt);
-    let gpxLayer = evt.target;
+    // console.log("loaded gpx event: ", evt)
+    let gpxLayer = evt.target
     map.fitBounds(gpxLayer.getBounds());
     let popup = `<h3>${gpxLayer.get_name()}</h3>
     <ul>
-        <li>Steckenlänge: ${(gpxLayer.get_distance()/1000).toFixed()} km</li>
-        <li>tiefster Punkt: ${gpxLayer.get_elevation_min().toFixed(1)} m</li>
-        <li>höchster Punkt: ${gpxLayer.get_elevation_max().toFixed(1)} m</li>
-        <li>Hoehenmeter bergauf: ${gpxLayer.get_elevation_gain().toFixed()} m</li>
-        <li>Hoehenmeter bergab: ${gpxLayer.get_elevation_loss().toFixed()} m</li>`;
-    gpxLayer.bindPopup(popup);
+        <li>Streckenlänge: ${(gpxLayer.get_distance()/1000).toFixed()} km</li>
+        <li>tiefster Punkt: ${gpxLayer.get_elevation_min()} m</li>
+        <li>höchster Punkt: ${gpxLayer.get_elevation_max()} m</li>
+        <li>Höhenmeter bergauf: ${(gpxLayer.get_elevation_gain()).toFixed()}</li>
+        <li>Höhenmeter bergab: ${(gpxLayer.get_elevation_loss()).toFixed()}</li>`;
+    gpxLayer.bindPopup(popup)
 });
 
 let elevationControl = L.control.elevation({
@@ -109,7 +108,6 @@ let elevationControl = L.control.elevation({
     elevationDiv: "#profile",
     theme: 'bike-tirol',
     height: 200,
-
 }).addTo(map);
 gpxTrack.on("addline", function(evt) {
     elevationControl.addData(evt.line);
